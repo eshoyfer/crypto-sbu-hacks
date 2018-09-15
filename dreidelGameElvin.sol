@@ -45,6 +45,7 @@ contract dreidelGame {
         // retaining msg.value
 
         playerCount++;
+
         players[playerCount - 1] = msg.sender;
         // Add his money to the pot
 
@@ -60,7 +61,7 @@ contract dreidelGame {
         // Calls game logic; creates reportable outcome; stores in plot
     }
 */
-    function kill() public {
+    function kill() private {
         if (msg.sender == owner) {
             selfdestruct(owner);
         }
