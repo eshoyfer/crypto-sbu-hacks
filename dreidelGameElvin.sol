@@ -3,11 +3,11 @@ contract dreidelGame {
 
     // Every member variable is temporarily public.
 
-    address owner; // Creator
-    address[6] players;
+    address public owner; // Creator
+    address[6] public players;
     // Uninitialized values except up to players
     uint8 public id; // Unique
-    uint8 public players; // Starts at 1
+    uint8 public playerCount; // Starts at 1
     uint8 public playersUpper; // Player defined 2-6
     uint256 public startTime; // Block
     uint8 public status; // 0 = joinable; 1 = ended
@@ -21,12 +21,12 @@ contract dreidelGame {
     constructor(uint8 _playersUpper) public payable {
         owner = msg.sender;
         playersUpper = _playersUpper;
-        players = 1;
+        playerCount = 1;
         stake = msg.value;
 
         if (playersUpper < 2 || playersUpper > 6) {
             kill();
-            // WARNING: Kill should neve rbe called outside of this
+            // WARNING: Kill should never be called outside of this
             // constructor!
         }
 
@@ -36,16 +36,16 @@ contract dreidelGame {
         // kill() by startTime + TIMEOUT
     }
 
-    function join() payable {
+    function join() payable public {
         if (msg.value != stake) return;
-        if (players + 1 > playersUpper) return;
+        if (playerCount + 1 > playersUpper) return;
 
         // Important:
         // Need to find out what the logic is for returning or
         // retaining msg.value
 
-        players++;
-        address[players - 1] = msg.sender;
+        playerCount++;
+        players[playerCount - 1] = msg.sender;
         // Add his money to the pot
 
 
@@ -54,14 +54,13 @@ contract dreidelGame {
         // Additionally, cancel the previous watchdog
         // or make it invalid (whichever is a more natural implementation)
 
-        }
     }
-
+/*
     function execute() {
         // Calls game logic; creates reportable outcome; stores in plot
     }
-
-    function kill() {
+*/
+    function kill() public {
         if (msg.sender == owner) {
             selfdestruct(owner);
         }
