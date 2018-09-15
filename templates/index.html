@@ -15,8 +15,12 @@
 				<p class="center-align">shekel.io</p>
 			</span>
 		</div>
-		<div class="col s5 teal">
-			<span class="flow-text">green joinable<br>yellow in progress<br>red ended	</span>
+		<div class="col s5 push-s1">
+			<span class="flow-text">
+				<img src="{{ url_for('static', filename='img/green_status.png') }}"/>&nbsp;&nbsp;joinable<br>
+				<img src="{{ url_for('static', filename='img/yellow_status.png') }}"/>&nbsp;&nbsp;in progress<br>
+				<img src="{{ url_for('static', filename='img/red_status.png') }}"/>&nbsp;&nbsp;ended
+			</span>
 		</div>
 	</div>
 
@@ -30,7 +34,7 @@
 	        <div class="card-content white-text">
 	          <div class="row">
 	          	<div class="col s5"><span class="card-title">Game r248uhv</span></div>
-	          	<div class="col s1 push-s6">g</div>
+	          	<div class="col s1 push-s6"><img src="{{ url_for('static', filename='img/green_status.png') }}"/></div>
 	          </div>
 	          <b>players</b> 2/4 <br>
 	          <b>stakes</b> 99999 <br>
@@ -47,7 +51,7 @@
 	        <div class="card-content white-text">
 	          <div class="row">
 	          	<div class="col s5"><span class="card-title">Game r248uhv</span></div>
-	          	<div class="col s1 push-s6">g</div>
+	          	<div class="col s1 push-s6"><img src="{{ url_for('static', filename='img/green_status.png') }}"/></div>
 	          </div>
 	          <b>players</b> 2/4 <br>
 	          <b>stakes</b> 99999 <br>
@@ -68,7 +72,7 @@
 	        <div class="card-content white-text">
 	          <div class="row">
 	          	<div class="col s5"><span class="card-title">Game r248uhv</span></div>
-	          	<div class="col s1 push-s6">g</div>
+	          	<div class="col s1 push-s6"><img src="{{ url_for('static', filename='img/yellow_status.png') }}"/></div>
 	          </div>
 	          <b>players</b> 2/4 <br>
 	          <b>stakes</b> 99999 <br>
@@ -85,7 +89,7 @@
 	        <div class="card-content white-text">
 	          <div class="row">
 	          	<div class="col s5"><span class="card-title">Game r248uhv</span></div>
-	          	<div class="col s1 push-s6">g</div>
+	          	<div class="col s1 push-s6"><img src="{{ url_for('static', filename='img/red_status.png') }}"/></div>
 	          </div>
 	          <b>players</b> 2/4 <br>
 	          <b>stakes</b> 99999 <br>
@@ -98,7 +102,4 @@
 	    </div>
 
 	  </div>
-
-<img src="{{ url_for('static', filename='img/'+roll+'.gif') }}"/>
-
 {% endblock bodycontent %}
