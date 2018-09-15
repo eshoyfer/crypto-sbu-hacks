@@ -1,39 +1,7 @@
 {% extends "base.html" %}
 
 {% block headcontent %}
-    <!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/game_style.css')}}"></link>-->
-
-    <style>
-	    .screen {
-	    	position: absolute;
-	    	top: 0px;
-	    	left: 0px;
-	    	width: 100vw;
-	    	height: 100vh;
-	    	background-color: #bdbdbd;
-	    }
-
-	    .spins {
-	    	position: absolute;
-	    	top: 0px;
-	    	left: 0px;
-	    	width: 100vw;
-	    	height: 70vh;
-	    }
-
-	    p {
-			position: absolute;
-			left: 50%;
-			-webkit-transform: translateX(-50%);
-			transform: translateX(-50%)
-		}
-
-		h1 {
-			position: absolute;
-			left: 50%;
-			transform: translate(-50%, 100%);
-		}
-	</style>	
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/game_style.css')}}"></link>	
 {% endblock headcontent %}
 
 {% block title %}
@@ -53,6 +21,11 @@
 		<img src="{{ url_for('static', filename='img/nun.gif') }}"/>
 		<img src="{{ url_for('static', filename='img/shin.gif') }}"/>
 	</p>
-	<h1> Determining winner... </h1>
+	<h1 id="text">Determining winner...</h1>
 	</div>
 {% endblock bodycontent %}
+
+
+{% block scripts %}
+	<script type="text/javascript" src="{{ url_for('static', filename='js/game.js') }}"></script>
+{% endblock scripts %}
