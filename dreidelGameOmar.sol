@@ -1,5 +1,5 @@
 pragma solidity ^0.4.22;
-contract Dreidel {
+contract dreidelGameOmar {
     address public owner; //contract owner
     address[6] public players; //players in the game
     uint8 public playersUpper; //max players before game auto-starts
@@ -25,8 +25,8 @@ contract Dreidel {
             kill();
             // WARNING: Kill should never be called outside of this
             // constructor!
-        }
-
+        
+}
         startTime = block.number;
         // Executer incentive to follow; watchdog for timed
         // kill() by startTime + TIMEOUT
