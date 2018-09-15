@@ -6,7 +6,6 @@ contract dreidelGame {
     address public owner; // Creator
     address[6] public players;
     // Uninitialized values except up to players
-    uint8 public id; // Unique
     uint8 public playerCount; // Starts at 1
     uint8 public playersUpper; // Player defined 2-6
     uint256 public startTime; // Block
@@ -20,6 +19,7 @@ contract dreidelGame {
     // Create
     constructor(uint8 _playersUpper) public payable {
         owner = msg.sender;
+        players[0] = owner;
         playersUpper = _playersUpper;
         playerCount = 1;
         stake = msg.value;
@@ -45,6 +45,7 @@ contract dreidelGame {
         // retaining msg.value
 
         playerCount++;
+
         players[playerCount - 1] = msg.sender;
         // Add his money to the pot
 
@@ -60,7 +61,7 @@ contract dreidelGame {
         // Calls game logic; creates reportable outcome; stores in plot
     }
 */
-    function kill() public {
+    function kill() private {
         if (msg.sender == owner) {
             selfdestruct(owner);
         }
