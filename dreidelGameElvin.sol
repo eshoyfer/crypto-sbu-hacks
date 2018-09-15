@@ -4,6 +4,8 @@ contract dreidelGame {
     //
 
     address owner; // Creator
+    address[6] players;
+    // Uninitialized values except up to players
     uint8 id; // Unique
     uint8 players; // Starts at 1
     uint8 playersUpper; // Player defined 2-6
@@ -26,6 +28,18 @@ contract dreidelGame {
         }
 
         startTime = block.number;
+    }
+
+    function join() public {
+        if (msg.value != stake) return;
+        if (players + 1 > playersUpper) return;
+
+        players++;
+        address[players - 1] = msg.sender;
+
+        // Joiner 
+
+        }
     }
 
     function kill() public {
