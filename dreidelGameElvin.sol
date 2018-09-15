@@ -40,6 +40,10 @@ contract dreidelGame {
         if (msg.value != stake) return;
         if (players + 1 > playersUpper) return;
 
+        // Important:
+        // Need to find out what the logic is for returning or
+        // retaining msg.value
+
         players++;
         address[players - 1] = msg.sender;
         // Add his money to the pot
@@ -62,5 +66,4 @@ contract dreidelGame {
             selfdestruct(owner);
         }
     }
-
 }
