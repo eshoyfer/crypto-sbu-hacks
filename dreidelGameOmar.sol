@@ -1,6 +1,6 @@
 pragma solidity ^0.4.22;
-//import "github.com/oraclize/ethereum-api/oraclizeAPI.sol";
-contract Dreidel {
+import "github.com/oraclize/ethereum-api/oraclizeAPI.sol";
+contract Dreidel is usingOraclize {
     address public owner; //contract owner
     address[6] public players; //players in the game
     uint8 public playersUpper; //max players before game auto-starts
@@ -13,6 +13,10 @@ contract Dreidel {
     uint8 public PIECE_AMT = 10;
     uint8 public TIMEOUT = 240; //time elapsed before timeout
     uint public ONE_ETH = 1000000000000000000;
+
+
+    event newRandomNumber_bytes(bytes);
+
     constructor(uint8 _playersUpper) public payable {
         owner = msg.sender;
         playersUpper = _playersUpper;
@@ -33,18 +37,24 @@ contract Dreidel {
 
 
     function join() payable public{
-        if (msg.value != stake) return;
-        if (playerCount + 1 > playersUpper) return;
+        require(msg.value != stake);
+        require(playerCount + 1 > playersUpper);
         playerCount++;
         players[playerCount - 1] = msg.sender;
         //if (players == playersUpper) //tell owner to cancel watchdog & start game
 
     }
 
-    function computeGame() public payable {
+    function computeGame() public {
+        //come on Barbie let's go party
+        mapping(address => uint8) player
 
     }
     
+    function generateRandomNumber() public returns uint {
+        //DEEPLY unsafe - change before production
+        return block.timestamp;
+    }
     function kill() private { 
         if (msg.sender == owner) 
         selfdestruct(owner); 
