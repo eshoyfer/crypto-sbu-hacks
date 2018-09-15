@@ -15,6 +15,7 @@ contract dreidelGame {
     unit8 MIN_PLAYERS = 2;
     unit8 TIMEOUT = 240;
     unit8 PIECES = 10;
+    uint32 plot;
 
     // Create
     constructor(uint8 _playersUpper) public payable {
@@ -39,13 +40,19 @@ contract dreidelGame {
 
         players++;
         address[players - 1] = msg.sender;
+        // Add his money to the pot
+
 
         // Executer incentive to follow; watchdog for
         // timed game execution by startTime + TIMEOUT
         // Additionally, cancel the previous watchdog
-        // or make it invalid (whichever is a more natural implementation) 
+        // or make it invalid (whichever is a more natural implementation)
 
         }
+    }
+
+    function execute() public {
+        // Calls game logic; creates reportable outcome; stores in plot
     }
 
     function kill() public {
