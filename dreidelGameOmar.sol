@@ -9,7 +9,7 @@ contract Dreidel {
     uint public startTime; //block that game started on
     uint public endTime;
     uint8 public MIN_PLAYERS = 2; //constant : number of players n
-    uint8 public PIECE_AMT = 5;
+    uint8 public PIECE_AMT = 10;
     uint public STAKE_WORTH;
     uint8 public TIMEOUT = 240; //time elapsed before timeout
     uint public ONE_ETH = 1000000000000000000;
@@ -32,9 +32,15 @@ contract Dreidel {
         // kill() by startTime + TIMEOUT
     }
 
-
+    function duplicate(address cheater) public view returns(bool) {
+        for (uint8 i = 0; i < playerCount; i++) {
+            if (cheater == players[i])
+                return true;
+        }
+        return false;
+    }
     function join() payable public{
-        require(msg.value == stake);
+        require(msg.value == stake && !duplicate(msg.sender));
         require(playerCount + 1 <= playersUpper);
         playerCount++;
         players[playerCount - 1] = msg.sender;
@@ -52,7 +58,6 @@ contract Dreidel {
         uint256 game = generateRandomNumber();
         uint8 playerIndex = 0;
         while (!winner(pieceCount, playerCount)) {
-            if (infinite_loop(pieceCount, playerCount)) break;
             while(pieceCount[playerIndex] == 0) 
                 playerIndex = (playerIndex + 1) % uint8(playerCount);
             uint256 ourTurn = game % 4; 
@@ -63,21 +68,22 @@ contract Dreidel {
                 uint8 takeAway = (pot + (pot % 2)) / 2;
                 pieceCount[playerIndex] += takeAway;
                 pot -= takeAway;
-                if (pot < 0) break;
             } else if (ourTurn == 3) { //shin
-                for (uint8 k = 0; k < 2 && pieceCount[playerIndex] > 0; k++) {
-                    pot++; 
-                    pieceCount[playerIndex] -= 1;
-                } //takes 3 away from player, or as much as they have
+                if (pieceCount[playerIndex] >= 3) {
+                    pot += 3;
+                    pieceCount[playerIndex] -= 3;
+                } else {
+                    pot += pieceCount[playerIndex];
+                    pieceCount[playerIndex] = 0;
+                }//takes 3 away from player, or as much as they have
             }
             //ourTurn == 0 is "nun" - nothing happens
             playerIndex = (playerIndex + 1) % uint8(playerCount);
             for(uint8 j = 0; j < playerCount; j++) {
-                if (pieceCount[j] == 0) {
-                    continue;
-                }
+                if (pieceCount[j] > 0) {
                 pot += 1;
                 pieceCount[j] -= 1;
+                }
             }
             game = game >> 2;
             rounds++;
@@ -91,12 +97,6 @@ contract Dreidel {
             if (pieces[i] > 0) player++;
         }
         return player == 1;
-    }
-    function infinite_loop(uint8[] pieces, uint8 size) public pure returns (bool) {
-        for (uint8 i = 0; i < size; i++) {
-            if (pieces[i] != 0) return false;
-        }
-        return true;
     }
     function generateRandomNumber() public view returns (uint256) {
         //DEEPLY unsafe - change before production
