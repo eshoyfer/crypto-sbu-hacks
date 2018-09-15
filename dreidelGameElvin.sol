@@ -26,6 +26,8 @@ contract dreidelGame {
 
         if (playersUpper < 2 || playersUpper > 6) {
             kill();
+            // WARNING: Kill should neve rbe called outside of this
+            // constructor!
         }
 
         startTime = block.number;
@@ -34,7 +36,7 @@ contract dreidelGame {
         // kill() by startTime + TIMEOUT
     }
 
-    function join() public {
+    function join() payable public {
         if (msg.value != stake) return;
         if (players + 1 > playersUpper) return;
 
