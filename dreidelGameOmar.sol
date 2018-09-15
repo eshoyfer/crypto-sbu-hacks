@@ -9,18 +9,14 @@ contract Dreidel {
     uint public startTime; //block that game started on
     uint public endTime;
     uint8 public MIN_PLAYERS = 2; //constant : number of players n
-    uint8 public PIECE_AMT = 10;
+    uint8 public PIECE_AMT = 5;
     uint public STAKE_WORTH;
     uint8 public TIMEOUT = 240; //time elapsed before timeout
     uint public ONE_ETH = 1000000000000000000;
 
-
-    event newRandomNumber_bytes(bytes);
-
     constructor(uint8 _playersUpper) public payable {
         owner = msg.sender;
-        //playersUpper = _playersUpper;
-        playersUpper = 2;
+        playersUpper = _playersUpper;
         playerCount = 1;
         stake = msg.value;
         players[0] = owner;
@@ -55,29 +51,28 @@ contract Dreidel {
         for (uint i = 0; i < playerCount; i++)  pieceCount[i] = PIECE_AMT;
         uint256 game = generateRandomNumber();
         uint8 playerIndex = 0;
-        uint8 livingPlayers = playerCount;
-        while (livingPlayers > 1 && game >= 4) {
+        while (!winner(pieceCount, playerCount)) {
+            if (infinite_loop(pieceCount, playerCount)) break;
             while(pieceCount[playerIndex] == 0) 
                 playerIndex = (playerIndex + 1) % uint8(playerCount);
-                uint256 ourTurn = game % 4; 
-                if (ourTurn == 0) { //nun
-                    playerIndex = (playerIndex + 1) % uint8(playerCount); 
-                } else if (ourTurn == 1) { //gimel
-                    pieceCount[playerIndex] += pot;
-                    pot = 0;
-                    playerIndex = (playerIndex + 1) % uint8(playerCount);
-                } else if (ourTurn == 2) { //hei
-                    uint8 takeAway = (pot + (pot % 2)) / 2;
-                    pieceCount[playerIndex] += takeAway;
-                    pot -= takeAway;
-                } else if (ourTurn == 3) { //shin
-                    for (uint8 k = 0; k < 2 && pieceCount[playerIndex] > 0; k++) {
-                        pot++; pieceCount[playerIndex]--;
-                    }
-                }
+            uint256 ourTurn = game % 4; 
+            if (ourTurn == 1) { //gimel
+                pieceCount[playerIndex] += pot;
+                pot = 0;
+            } else if (ourTurn == 2) { //hei
+                uint8 takeAway = (pot + (pot % 2)) / 2;
+                pieceCount[playerIndex] += takeAway;
+                pot -= takeAway;
+            } else if (ourTurn == 3) { //shin
+                for (uint8 k = 0; k < 2 && pieceCount[playerIndex] > 0; k++) {
+                    pot++; 
+                    pieceCount[playerIndex] -= 1;
+                } //takes 3 away from player, or as much as they have
+            }
+            //ourTurn == 0 is "nun" - nothing happens
+            playerIndex = (playerIndex + 1) % uint8(playerCount);
             for(uint8 j = 0; j < playerCount; j++) {
                 if (pieceCount[j] == 0) {
-                    livingPlayers--;
                     continue;
                 }
                 pot += 1;
@@ -89,15 +84,24 @@ contract Dreidel {
         return (pieceCount, pot, rounds);
     }
     
+    function winner(uint8[] pieces, uint8 size) public pure returns (bool) {
+        uint8 player = 0;
+        for (uint8 i = 0; i < size; i++) {
+            if (pieces[i] > 0) player++;
+        }
+        return player == 1;
+    }
+    function infinite_loop(uint8[] pieces, uint8 size) public pure returns (bool) {
+        for (uint8 i = 0; i < size; i++) {
+            if (pieces[i] != 0) return false;
+        }
+        return true;
+    }
     function generateRandomNumber() public view returns (uint256) {
         //DEEPLY unsafe - change before production
         return uint256(keccak256(block.timestamp));
     }
-    
-    function rightShift() public view returns (uint256, uint256, uint256) {
-        uint256 test = generateRandomNumber();
-        return (test, uint256(4), test % 4);
-    }
+
     function kill() private { 
         if (msg.sender == owner) 
         selfdestruct(owner); 
