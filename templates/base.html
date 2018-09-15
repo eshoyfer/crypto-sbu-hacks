@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/materialize.min.css')}}"></link>
+
+    {% block headcontent %}
+    {% endblock headcontent %}
+
+    {% block title %}
+		<title>despacito for the nintendo psp</title>
+	{% endblock title %}
+</head>
+<body>
+
+    <main>
+      <div class="container">
+        {% block bodycontent %}
+        {% endblock bodycontent %}
+      </div>
+      {% block scripts %}
+      {% endblock scripts %}
+    </main>
+
+</body>
+</html>
