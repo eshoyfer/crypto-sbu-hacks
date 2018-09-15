@@ -2,7 +2,9 @@ pragma solidity ^0.4.22;
 
 contract Dreidel {
     address owner; //contract owner
+    address[6] players; //players in the game
     uint8 upperPlayers; //max players before game auto-starts
+    uint8 players; //starts at 1
     uint stake; //amt of ETH staked
     uint8 status; //0 = joinable; 1 = completed 
     uint startTime; //block that game started on
@@ -16,10 +18,16 @@ contract Dreidel {
         owner = msg.sender;
         stake = msg.value;
         startTime = block.number;
+        players[0] = owner;
         endTime = block.number + TIMEOUT;
     }
 
-    
+    function computeGame(address[6] players) {
+
+    }
+
+    function join(uint8 playerSize) {
+    }
     
     function kill() public { 
         if (msg.sender == owner) 
