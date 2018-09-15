@@ -1,32 +1,28 @@
 pragma solidity ^0.4.22;
-contract dreidelGame {
 
-    //
-
-    address owner; // Creator
-    uint8 id; // Unique
-    uint8 players; // Starts at 1
-    uint8 playersUpper; // Player defined 2-6
-    uint32 startTime; // Block
-    uint8 status; // 0 = joinable; 1 = in progress; 2 = ended
-    uint8 stake; // Player defined stake per player; sent to join
-
-    // Create
-    constructor(uint8 _stake, uint8 _playersUpper) public payable {
+contract Dreidel {
+    address owner; //contract owner
+    uint8 upperPlayers; //max players before game auto-starts
+    uint stake; //amt of ETH staked
+    uint8 status; //0 = joinable; 1 = completed 
+    uint startTime; //block that game started on
+    uint8 MIN_PLAYERS = 2; //constant : number of players n
+    uint8 PIECE_AMT = 10;
+    uint8 TIMEOUT = 240; //time elapsed before timeout
+    
+    constructor(uint8 _upperPlayers) public payable {
+        if (_upperPlayers < 2 || _upperPlayers > 6) kill();
         owner = msg.sender;
-        stake = _stake;
-        playersUpper = _playersUpper;
-        players = 1;
-
-        if (playersUpper < 2 || playersUpper > 6) {
-            kill();
-        }
+        stake = msg.value;
+        startTime = block.number;
+        endTime = block.number + TIMEOUT;
     }
 
-    function kill() public {
-        if (msg.sender == owner) {
-            selfdestruct(owner);
-        }
+    
+    
+    function kill() public { 
+        if (msg.sender == owner) 
+        selfdestruct(owner); 
     }
 
 }
