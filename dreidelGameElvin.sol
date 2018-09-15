@@ -10,6 +10,9 @@ contract dreidelGame {
     uint256 startTime; // Block
     uint8 status; // 0 = joinable; 1 = ended
     uint stake; // Player defined stake per player; sent to join
+    unit8 MIN_PLAYERS = 2;
+    unit8 TIMEOUT = 240;
+    unit8 PIECES = 10;
 
     // Create
     constructor(uint8 _playersUpper) public payable {
