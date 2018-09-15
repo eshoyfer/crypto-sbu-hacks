@@ -3,9 +3,16 @@ from flask import Flask, render_template, url_for, redirect
 app = Flask(__name__)
 app.debug = True
 
+ROLLS = {0: 'nun',
+        1: 'gimel',
+        2: 'hei',
+        3: 'shin'}
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+    #give me number 0 to 3 somehow
+    num = 0
+    return render_template('index.html', roll=ROLLS[num])
     
 @app.errorhandler(404)
 def page_not_found(error):
