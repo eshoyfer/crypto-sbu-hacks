@@ -16,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/eshoyfer/crypto-sbu-hacks/issues"
   },
-  "homepage": "https://github.com/eshoyfer/crypto-sbu-hacks#readme"
+  "homepage": "https://github.com/eshoyfer/crypto-sbu-hacks#readme",
+  "devDependencies": {
+    "truffle": "^4.1.14"
+  },
+  "dependencies": {
+    "ganache-cli": "^6.1.8",
+    "web3": "^0.20.0"
+  }
 }
