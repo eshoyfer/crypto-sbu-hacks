@@ -5,12 +5,11 @@ contract Dreidel {
     uint8 public playersUpper; //max players before game auto-starts
     uint8 public playerCount; //starts at 1
     uint public stake; //amt of ETH staked
-    uint8 public status; //0 = joinable; 1 = completed 
+    uint8 public status;
     uint public startTime; //block that game started on
     uint public endTime;
     uint8 public MIN_PLAYERS = 2; //constant : number of players n
-    uint8 public PIECE_AMT = 10;
-    uint public STAKE_WORTH;
+    uint8 public PIECE_AMT = 7;
     uint8 public TIMEOUT = 240; //time elapsed before timeout
     uint public ONE_ETH = 1000000000000000000;
 
@@ -18,16 +17,16 @@ contract Dreidel {
         owner = msg.sender;
         playersUpper = _playersUpper;
         playerCount = 1;
+        status = 0;
         stake = msg.value;
         players[0] = owner;
-        if (playersUpper < 2 || playersUpper > 6) {
+        if (playersUpper < 2 || playersUpper > 6 || stake <  ONE_ETH / 100) {
             kill();
             // WARNING: Kill should never be called outside of this
             // constructor!
         }
 
         startTime = block.number;
-        STAKE_WORTH = stake / PIECE_AMT;
         // Executer incentive to follow; watchdog for timed
         // kill() by startTime + TIMEOUT
     }
@@ -40,24 +39,25 @@ contract Dreidel {
         return false;
     }
     function join() payable public{
-        require(msg.value == stake && !duplicate(msg.sender));
+        require(msg.value == stake && !duplicate(msg.sender) && status == 0);
         require(playerCount + 1 <= playersUpper);
         playerCount++;
         players[playerCount - 1] = msg.sender;
-        //if (players == playersUpper) //tell owner to cancel watchdog & start game
-
+        if (playerCount == playersUpper)
+            computeGame();
     }
 
-    function computeGame() public view returns(uint8[], uint8, uint8) {
+    function computeGame() public payable returns(uint256) {
         //come on Barbie let's go party
         require(playerCount > 1);
+        uint256 game = generateRandomNumber();
+        /* Here lies actual dreidel code 
         uint8 rounds = 0;
         uint8[] memory pieceCount = new uint8[](playerCount);
         uint8 pot = 0;
         for (uint i = 0; i < playerCount; i++)  pieceCount[i] = PIECE_AMT;
-        uint256 game = generateRandomNumber();
         uint8 playerIndex = 0;
-        while (!winner(pieceCount, playerCount)) {
+        while (!isOver(pieceCount, playerCount)) {
             while(pieceCount[playerIndex] == 0) 
                 playerIndex = (playerIndex + 1) % uint8(playerCount);
             uint256 ourTurn = game % 4; 
@@ -88,16 +88,25 @@ contract Dreidel {
             game = game >> 2;
             rounds++;
         }
-        return (pieceCount, pot, rounds);
+        address winner;
+        for (uint k = 0; k < playerCount; i++) {
+            if(pieceCount[playerCount] > 0) {
+                winner = players[i];
+            }
+        }*/
+        address winner = players[game % playerCount];
+        winner.transfer(stake * playerCount);
+        status = 1;
+        return (game);
+        
     }
-    
-    function winner(uint8[] pieces, uint8 size) public pure returns (bool) {
+    function isOver(uint8[] pieces, uint8 size) public pure returns (bool) {
         uint8 player = 0;
         for (uint8 i = 0; i < size; i++) {
             if (pieces[i] > 0) player++;
         }
-        return player == 1;
     }
+
     function generateRandomNumber() public view returns (uint256) {
         //DEEPLY unsafe - change before production
         return uint256(keccak256(block.timestamp));
