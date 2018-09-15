@@ -8,7 +8,7 @@ contract dreidelGame {
     uint8 players; // Starts at 1
     uint8 playersUpper; // Player defined 2-6
     uint256 startTime; // Block
-    uint8 status; // 0 = joinable; 1 = in progress; 2 = ended
+    uint8 status; // 0 = joinable; 1 = ended
     uint stake; // Player defined stake per player; sent to join
 
     // Create
@@ -22,7 +22,7 @@ contract dreidelGame {
             kill();
         }
 
-        startTime = block.timestamp;
+        startTime = block.number;
     }
 
     function kill() public {
