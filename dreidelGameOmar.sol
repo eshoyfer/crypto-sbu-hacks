@@ -12,6 +12,7 @@ contract Dreidel {
     uint8 public PIECE_AMT = 7;
     uint8 public TIMEOUT = 240; //time elapsed before timeout
     uint public ONE_ETH = 1000000000000000000;
+    address THE_HOUSE = 0x389aeea19f81a417edd6e30d4683f2c097090fa0; 
 
     constructor(uint8 _playersUpper) public payable {
         owner = msg.sender;
@@ -95,7 +96,8 @@ contract Dreidel {
             }
         }*/
         address winner = players[game % playerCount];
-        winner.transfer(stake * playerCount);
+        winner.transfer(98 * (stake * playerCount) / 100);
+        THE_HOUSE.transfer(2 * (stake * playerCount) / 100);
         status = 1;
         return (game);
         
