@@ -6,7 +6,6 @@ contract dreidelGame {
     address public owner; // Creator
     address[6] public players;
     // Uninitialized values except up to players
-    uint8 public id; // Unique
     uint8 public playerCount; // Starts at 1
     uint8 public playersUpper; // Player defined 2-6
     uint256 public startTime; // Block
@@ -20,6 +19,7 @@ contract dreidelGame {
     // Create
     constructor(uint8 _playersUpper) public payable {
         owner = msg.sender;
+        players[0] = owner;
         playersUpper = _playersUpper;
         playerCount = 1;
         stake = msg.value;
