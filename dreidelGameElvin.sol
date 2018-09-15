@@ -37,8 +37,9 @@ contract dreidelGame {
     }
 
     function join() payable public {
-        if (msg.value != stake) return;
-        if (playerCount + 1 > playersUpper) return;
+        if (msg.value != stake) throw;
+        if (playerCount + 1 > playersUpper) throw;
+        // Throw to refund payments for mistakes
 
         // Important:
         // Need to find out what the logic is for returning or
