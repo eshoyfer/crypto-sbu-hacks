@@ -2,16 +2,21 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/materialize.min.css')}}"></link>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     {% block headcontent %}
     {% endblock headcontent %}
 
+    <style>
+    div.card.grey.darken-1.z-depth-1:hover {
+	background-color: #bdbdbd;
+}</style>
     {% block title %}
 		<title>despacito for the nintendo switch</title>
 	{% endblock title %}
 </head>
 <body>
-
+<br><br>
     <main>
       <div class="container">
         {% block bodycontent %}
