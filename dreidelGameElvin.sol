@@ -1,21 +1,21 @@
 pragma solidity ^0.4.22;
 contract dreidelGame {
 
-    //
+    // Every member variable is temporarily public.
 
     address owner; // Creator
     address[6] players;
     // Uninitialized values except up to players
-    uint8 id; // Unique
-    uint8 players; // Starts at 1
-    uint8 playersUpper; // Player defined 2-6
-    uint256 startTime; // Block
-    uint8 status; // 0 = joinable; 1 = ended
-    uint stake; // Player defined stake per player; sent to join
-    unit8 MIN_PLAYERS = 2;
-    unit8 TIMEOUT = 240;
-    unit8 PIECES = 10;
-    uint32 plot;
+    uint8 public id; // Unique
+    uint8 public players; // Starts at 1
+    uint8 public playersUpper; // Player defined 2-6
+    uint256 public startTime; // Block
+    uint8 public status; // 0 = joinable; 1 = ended
+    uint public stake; // Player defined stake per player; sent to join
+    uint8 public MIN_PLAYERS = 2;
+    uint8 public TIMEOUT = 240;
+    uint8 public PIECES = 10;
+    uint32 public plot;
 
     // Create
     constructor(uint8 _playersUpper) public payable {
@@ -36,7 +36,7 @@ contract dreidelGame {
         // kill() by startTime + TIMEOUT
     }
 
-    function join() payable public {
+    function join() payable {
         if (msg.value != stake) return;
         if (players + 1 > playersUpper) return;
 
@@ -53,11 +53,11 @@ contract dreidelGame {
         }
     }
 
-    function execute() public {
+    function execute() {
         // Calls game logic; creates reportable outcome; stores in plot
     }
 
-    function kill() public {
+    function kill() {
         if (msg.sender == owner) {
             selfdestruct(owner);
         }
