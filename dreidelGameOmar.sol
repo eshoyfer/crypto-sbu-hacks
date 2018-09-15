@@ -63,6 +63,7 @@ contract Dreidel {
                 uint8 takeAway = (pot + (pot % 2)) / 2;
                 pieceCount[playerIndex] += takeAway;
                 pot -= takeAway;
+                if (pot < 0) break;
             } else if (ourTurn == 3) { //shin
                 for (uint8 k = 0; k < 2 && pieceCount[playerIndex] > 0; k++) {
                     pot++; 
