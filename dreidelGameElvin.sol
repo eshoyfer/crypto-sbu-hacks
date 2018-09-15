@@ -28,6 +28,9 @@ contract dreidelGame {
         }
 
         startTime = block.number;
+
+        // Executer incentive to follow; watchdog for timed
+        // kill() by startTime + TIMEOUT
     }
 
     function join() public {
@@ -37,7 +40,10 @@ contract dreidelGame {
         players++;
         address[players - 1] = msg.sender;
 
-        // Joiner 
+        // Executer incentive to follow; watchdog for
+        // timed game execution by startTime + TIMEOUT
+        // Additionally, cancel the previous watchdog
+        // or make it invalid (whichever is a more natural implementation) 
 
         }
     }
