@@ -4,16 +4,23 @@ contract dreidelGame {
     //
 
     address owner; // Creator
-    uint id; // Unique
-    uint players; // Starts at 1
-    uint playersUpper; // Player defined 2-6
-    uint startTime; // Block
-    uint status; // 0 = joinable; 1 = in progress; 2 = ended
-    uint stake; // Player defined stake per player; sent to join
+    uint8 id; // Unique
+    uint8 players; // Starts at 1
+    uint8 playersUpper; // Player defined 2-6
+    uint32 startTime; // Block
+    uint8 status; // 0 = joinable; 1 = in progress; 2 = ended
+    uint8 stake; // Player defined stake per player; sent to join
 
     // Create
-    constructor(uint8 _stake, uint) public payable {
+    constructor(uint8 _stake, uint8 _playersUpper) public payable {
         owner = msg.sender;
+        stake = _stake;
+        playersUpper = _playersUpper;
+        players = 1;
+
+        if (playersUpper < 2 || playersUpper > 6) {
+            kill();
+        }
     }
 
     function kill() public {
