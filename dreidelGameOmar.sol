@@ -15,6 +15,7 @@ contract Dreidel {
     
     constructor(uint8 _upperPlayers) public payable {
         if (_upperPlayers < 2 || _upperPlayers > 6) kill();
+        upperPlayers = _upperPlayers;
         owner = msg.sender;
         stake = msg.value;
         startTime = block.number;
