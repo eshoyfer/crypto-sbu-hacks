@@ -1,0 +1,29 @@
+.screen {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100vw;
+	height: 100vh;
+	background-color: #bdbdbd;
+}
+
+.spins {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100vw;
+	height: 70vh;
+}
+
+p {
+	position: absolute;
+	left: 50%;
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%)
+}
+
+h1 {
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, 100%);
+}

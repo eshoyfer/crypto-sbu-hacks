@@ -1,7 +1,130 @@
 {% extends "base.html" %}
 
+{% block headcontent %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index_style.css')}}"></link>
+    <script>
+		window.addEventListener('load', async () => {
+    // Modern dapp browsers...
+    if (window.ethereum) {
+        console.log("Found MetaMask (new)!");
+        window.web3 = new Web3(ethereum);
+        try {
+            // Request account access if needed
+            await ethereum.enable();
+            // Acccounts now exposed
+            web3.eth.sendTransaction({/* ... */});
+        } catch (error) {
+            // User denied account access...
+        }
+    }
+    // Legacy dapp browsers...
+    else if (window.web3) {
+        console.log("Found MetaMask (old)!");
+        window.web3 = new Web3(web3.currentProvider);
+        // Acccounts always exposed
+        	var myContract = web3.eth.contract([{"constant":true,"inputs":[{"name":"cheater","type":"address"}],"name":"duplicate","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"status","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"playerCount","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"endTime","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"stake","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"pieces","type":"uint8[]"},{"name":"size","type":"uint8"}],"name":"isOver","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"pure","type":"function"},{"constant":true,"inputs":[],"name":"generateRandomNumber","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"startTime","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"PIECE_AMT","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"MIN_PLAYERS","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"join","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[],"name":"computeGame","outputs":[{"name":"","type":"uint256"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"playersUpper","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"ONE_ETH","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"TIMEOUT","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"players","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_playersUpper","type":"uint8"}],"payable":true,"stateMutability":"payable","type":"constructor"}]);
+        var contractInstance = MyContract.at(web3.eth.accounts[0]);
+        var contractInstance = MyContract.new(5);
+
+    }
+    // Non-dapp browsers...
+    else {
+        console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+    }
+});</script>
+{% endblock headcontent %}
+
+{% block title %}
+	<title>shekel.io</title>
+{% endblock title %}
+
 {% block bodycontent %}
 
-<img src="{{ url_for('static', filename='img/'+roll+'.gif') }}"/>
+    <div class="container">
+	<div class="row valign-wrapper">
+		<div class="col s5">
+			<span class="flow-text site-title">
+				<p class="center-align">shekel.io</p>
+			</span>
+		</div>
+		<div class="col s5 push-s1">
+			<span class="flow-text">
+				<img src="{{ url_for('static', filename='img/green_status.png') }}"/>&nbsp;&nbsp;joinable<br>
+				<img src="{{ url_for('static', filename='img/yellow_status.png') }}"/>&nbsp;&nbsp;in progress<br>
+				<img src="{{ url_for('static', filename='img/red_status.png') }}"/>&nbsp;&nbsp;ended
+			</span>
+		</div>
+	</div>
 
+	 <div class="divider"></div>
+	 <br>
+
+	 <div class="row">
+
+	    <div class="col s6">
+	      <div class="card grey darken-1 z-depth-1">
+	        <div class="card-content white-text">
+	          <div class="row">
+	          	<div class="col s5"><span class="card-title">Game r248uhv</span></div>
+	          	<div class="col s1 push-s6"><img src="{{ url_for('static', filename='img/green_status.png') }}"/></div>
+	          </div>
+	          <b>players</b> 2/4 <br>
+	          <b>stakes</b> 99999 <br>
+	          <b>what else goes here</b> lol
+	        </div>
+	        <div class="card-action">
+	          <a class="btn-floating btn-small grey darken-3"><i class="material-icons">add</i></a>
+	        </div>
+	      </div>
+	    </div>
+
+	    <div class="col s6">
+	      <div class="card grey darken-1 z-depth-1">
+	        <div class="card-content white-text">
+	          <div class="row">
+	          	<div class="col s5"><span class="card-title">Game r248uhv</span></div>
+	          	<div class="col s1 push-s6"><img src="{{ url_for('static', filename='img/green_status.png') }}"/></div>
+	          </div>
+	          <b>players</b> 2/4 <br>
+	          <b>stakes</b> 99999 <br>
+	          <b>what else goes here</b> lol
+	        </div>
+	        <div class="card-action">
+	          <a class="btn-floating btn-small grey darken-3"><i class="material-icons">add</i></a>
+	        </div>
+	      </div>
+	    </div>
+
+	  </div>
+
+	 <div class="row">
+
+	    <div class="col s6">
+	      <div class="card grey darken-1 z-depth-1">
+	        <div class="card-content white-text">
+	          <div class="row">
+	          	<div class="col s5"><span class="card-title">Game r248uhv</span></div>
+	          	<div class="col s1 push-s6"><img src="{{ url_for('static', filename='img/yellow_status.png') }}"/></div>
+	          </div>
+	          <b>players</b> 2/4 <br>
+	          <b>stakes</b> 99999 <br>
+	          <b>what else goes here</b> lol
+	        </div>
+	        <div class="card-action">
+	          <a class="btn-floating btn-small grey darken-3"><i class="material-icons">add</i></a>
+	        </div>
+	      </div>
+	    </div>
+
+	    <div class="col s6">
+	      <div class="card grey darken-1 z-depth-1">
+	        <div class="card-content white-text">
+	        	<a class="btn-flat btn-large white-text grey darken-3"><i class="material-icons">add</i></a>
+	        	&nbsp;&nbsp;&nbsp;&nbsp;<h5 style="display: inline;"> Start New Game </h5>
+	        </div>
+	      </div>
+	    </div>
+
+	  </div>
+	  </div>
 {% endblock bodycontent %}

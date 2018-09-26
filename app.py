@@ -14,6 +14,10 @@ def index():
     num = 0
     return render_template('index.html', roll=ROLLS[num])
     
+@app.route('/game')
+def game():
+    return render_template('game.html')
+    
 @app.errorhandler(404)
 def page_not_found(error):
     return redirect(url_for('index')), 404

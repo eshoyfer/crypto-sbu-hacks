@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block headcontent %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/game_style.css')}}"></link>	
+{% endblock headcontent %}
+
+{% block title %}
+	<title>shekel.io</title>
+{% endblock title %}
+
+{% block bodycontent %}
+	<div class="screen">
+	</div>
+	<div class="spins valign-wrapper">
+	<p>
+		<img src="{{ url_for('static', filename='img/nun.gif') }}"/>
+		<img src="{{ url_for('static', filename='img/shin.gif') }}"/>
+		<img src="{{ url_for('static', filename='img/gimel.gif') }}"/>
+		<img src="{{ url_for('static', filename='img/shin.gif') }}"/>
+		<img src="{{ url_for('static', filename='img/hei.gif') }}"/>
+		<img src="{{ url_for('static', filename='img/nun.gif') }}"/>
+		<img src="{{ url_for('static', filename='img/shin.gif') }}"/>
+	</p>
+	<h1 id="text">Determining winner...</h1>
+	</div>
+{% endblock bodycontent %}
+
+
+{% block scripts %}
+	<script type="text/javascript" src="{{ url_for('static', filename='js/game.js') }}"></script>
+{% endblock scripts %}

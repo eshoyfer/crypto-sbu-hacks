@@ -2,60 +2,22 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/materialize.min.css')}}"></link>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     {% block headcontent %}
     {% endblock headcontent %}
 
     {% block title %}
-		<title>despacito2 for the nintendo switch</title>
-	{% endblock title %}
+		  <title>despacito2 for the nintendo switch</title>
+	  {% endblock title %}
 </head>
 <body>
-  <nav>
-    <div class="nav-wrapper">
-      <a href="#" class="brand-logo">DreidelGameCoin</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-      </ul>
-    </div>
-  </nav>
-  <div class="row">
-    <div class="col s12 m6">
-      <div class="card blue-grey darken-1">
-        <div class="card-content white-text">
-          <span class="card-title">Dreidel Games 1</span>
-          <p>TBA sample</p>
-        </div>
-        <div class="card-action">
-          <a href="#">This is a link</a>
-          <a href="#">This is a link</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col s12 m6">
-      <div class="card blue-grey darken-1">
-        <div class="card-content white-text">
-          <span class="card-title">Dreidel Games 2</span>
-          <p>I am a very simple card. I am good at containing small bits of information.
-          I am convenient because I require little markup to use effectively.</p>
-        </div>
-        <div class="card-action">
-          <a href="#">This is a link</a>
-          <a href="#">This is a link</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  <br><br>
     <main>
-      <div class="container">
-        {% block bodycontent %}
-        {% endblock bodycontent %}
-      </div>
+      {% block bodycontent %}
+      {% endblock bodycontent %}
       {% block scripts %}
       {% endblock scripts %}
     </main>
-
 </body>
 </html>
